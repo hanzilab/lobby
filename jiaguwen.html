@@ -1,7 +1,46 @@
 <!-- jiaguwen.html -->
-  <!-- 載入 A-Frame 和 MindAR -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<title>甲骨文</title>
+<style>
+body {
+background-color: #f5f0e6;
+font-family: 'DFKai-SB', '標楷體', serif;
+color: black;
+text-align: center;
+}
+.title {
+font-size: 32px;
+margin-top: 30px;
+}
+.subtitle {
+font-size: 20px;
+margin: 20px 0;
+}
+.grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 10px;
+width: 60%;
+margin: 0 auto;
+}
+a.link-btn {
+font-size: 20px;
+color: black;
+text-decoration: underline;
+}
+</style>
+</head>
+<body>
+<div class="title">甲骨文</div>
+    <!-- 載入 A-Frame 和 MindAR -->
 <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script
+<div class="subtitle">接下來，請點選你想學習的漢字</div>
+<div class="grid">
+<!-- 2x15 = 30 按鈕 -->
 <!-- 按鈕可自行替換文字 -->
 <a class="link-btn" href="#">字1</a>
 <a class="link-btn" href="#">字2</a>
@@ -36,3 +75,4 @@
 </div>
 </body>
 </html>
+
