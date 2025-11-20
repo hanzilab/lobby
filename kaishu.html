@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>MindAR 多影片播放互動</title>
+<!-- 載入 A-Frame 和 MindAR -->
+<script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+<style>
+  body { margin: 0; overflow: hidden; }
+  .gallery {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+  }
+  .gallery img {
+    width: 100px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+  }
+</style>
+</head>
+<body>
+<a-scene
+  mindar-image="imageTargetSrc: targets1.mind, targets2.mind, targets3.mind; autoStart: true; uiScanning: true;"
+  color-space="sRGB"
+  renderer="colorManagement: true; physicallyCorrectLights: true"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false">
+
+  <!-- 載入影片資源 -->
+  <a-assets>
+    <video id="video1" src="nu1.mp4" preload="auto" loop muted></video>
+    <video id="video2" src="nu2.mp4" preload="auto" loop muted></video>
+    <video id="video3" src="nu3.mp4" preload="auto" loop muted></video>
+  </a-assets>
+
+  <!-- 環境光線 -->
+  <a-light type="ambient" intensity="1.5"></a-light>
+  <!-- 相機 -->
+  <a-camera look-controls="enabled: false"></a-camera>
+
+  <!-- target1 (甲骨女) -->
+  <a-entity mindar-image-target="targetIndex: 0">
+    <a-video id="videoPlane1" src="#video1" width="1.2" height="0.7"
+      autoplay="false" loop="true" material="shader: flat" position="0 0 0"></a-video>
+  </a-entity>
+
+  <!-- target2 (楷書女) -->
+  <a-entity mindar-image-target="targetIndex: 1">
+    <a-video id="videoPlane2" src="#video2" width="1.2" height="0.7"
+      autoplay="false" loop="true" material="shader: flat" position="0 0 0"></a-video>
+  </a-entity>
+
+  <!-- target3 (小篆女) -->
+  <a-entity mindar-image-target="targetIndex: 2">
+    <a-video id="videoPlane3" src="#video3" width="0.7" height="0.7"
+      autoplay="false" loop="true" material="shader: flat" position="0 0 0"></a-video>
+  </a-entity>
+
+</a-scene>
+
+<!-- 底部展示對應圖片 (提示用) -->
+<div class="gallery">
+  <div>
+    <img src="甲骨女.png" alt="甲骨女" />
+  </div>
+  <div>
+    <img src="楷書女.png" alt="楷書女" />
+  </div>
+  <div>
+    <img src="小篆女.png" alt="小篆女" />
+  </div>
+</div>
+
+<script>
+// --- Target 1 ---
+const video1 = document.querySelector('#video1');
+const videoPlane1 = document.querySelector('#videoPlane1');
+const target1 = document.querySelector('a-entity[mindar-image-target][targetIndex="0"]');
+videoPlane1.addEventListener('click', () => video1.paused ? video1.play() : video1.pause());
+target1.addEventListener('targetFound', () => { video1.play(); });
+target1.addEventListener('targetLost', () => { video1.pause(); video1.currentTime = 0; });
+
+// --- Target 2 ---
+const video2 = document.querySelector('#video2');
+const videoPlane2 = document.querySelector('#videoPlane2');
+const target2 = document.querySelector('a-entity[mindar-image-target][targetIndex="1"]');
+videoPlane2.addEventListener('click', () => video2.paused ? video2.play() : video2.pause());
+target2.addEventListener('targetFound', () => { video2.play(); });
+target2.addEventListener('targetLost', () => { video2.pause(); video2.currentTime = 0; });
+
+// --- Target 3 ---
+const video3 = document.querySelector('#video3');
+const videoPlane3 = document.querySelector('#videoPlane3');
+const target3 = document.querySelector('a-entity[mindar-image-target][targetIndex="2"]');
+videoPlane3.addEventListener('click', () => video3.paused ? video3.play() : video3.pause());
+target3.addEventListener('targetFound', () => { video3.play(); });
+target3.addEventListener('targetLost', () => { video3.pause(); video3.currentTime = 0; });
+</script>
+</body>
+</html>
