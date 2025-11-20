@@ -1,55 +1,62 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8" />
 <title>漢字卡片之AR互動影片</title>
-  <!-- 載入 A-Frame 和 MindAR -->
-<script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 <style>
 body {
 background-color: #f5f0e6;
 font-family: 'DFKai-SB', '標楷體', serif;
 color: black;
-  margin: 0;
-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-text-align: center;
 margin: 0;
-padding: 0;
+padding-top: 20px;
+text-align: center;
 }
-.container {
-padding: 40px 20px;
+.header-box {
+width: 90%;
+margin: 0 auto;
+border: 5px solid black;
+padding: 20px;
 }
 .title {
-font-size: 60px;
-margin-bottom: 20px;
+font-size: 80px;
+margin-bottom: 10px;
 }
-.subtitle {
-font-size: 50px;
-margin-bottom: 30px;
+.divider {
+width: 100%;
+height: 3px;
+background-color: black;
+margin: 10px 0;
+}
+.subtitle-big {
+font-size: 70px;
+line-height: 1.3;
+}
+.buttons {
+margin-top: 40px;
 }
 a.button {
 display: block;
 font-size: 40px;
-color: black;
+color: #003366;
 text-decoration: underline;
-margin: 10px auto;
+margin: 15px auto;
 }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="header-box">
 <div class="title">漢字卡片之AR互動影片</div>
-<div class="subtitle">歡迎進入漢字卡片AR輔助學習專區，請選擇你想學習的字形</div>
+<div class="divider"></div>
+<div class="subtitle-big">歡迎進入漢字卡片AR輔助學習專區<br>請選擇你想學習的字形</div>
+</div>
+
+
+<div class="buttons">
 <a class="button" href="jiaguwen.html">甲骨文</a>
 <a class="button" href="xiaozhuan.html">小篆</a>
 <a class="button" href="kaishu.html">楷書</a>
 </div>
 </body>
 </html>
-
-
-
