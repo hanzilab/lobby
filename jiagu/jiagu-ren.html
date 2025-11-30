@@ -7,6 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 </head>
 <body>
+
 <a-scene
   mindar-image="imageTargetSrc: /lobby/jiagu-ren.mind; autoStart: true; uiScanning: true;"
   color-space="sRGB"
@@ -27,40 +28,40 @@
       src="#introVid"
       width="1.2"
       height="0.7"
-      material="shader: flat"; src: #introVid;"
       position="0 0 0"
       loop
       muted
       playsinline
       webkit-playsinline
+      material="shader: flat; src: #introVid;"
     ></a-video>
   </a-entity>
 </a-scene>
 
 <script>
 const video = document.querySelector('#introVid');
-const videoPlane = document.querySelector('#videoEntity');
 const targetEntity = document.querySelector('a-entity[mindar-image-target]');
 
-// 強制影片在使用者互動後可以播放
+// 確保影片可以播放
+video.load();
+
+// 手機端第一次觸碰後允許播放
 const enableVideoPlay = () => {
-  video.play().catch(err => {
-    console.log('需要使用者互動才能播放影片', err);
-  });
+  video.play().catch(err => console.log('需使用者互動才能播放影片', err));
 };
 document.body.addEventListener('click', enableVideoPlay, { once: true });
 document.body.addEventListener('touchstart', enableVideoPlay, { once: true });
 
-// target 找到時播放影片
+// targetFound 時播放影片
 targetEntity.addEventListener('targetFound', () => {
-  if (video.readyState >= 2) {
+  if(video.readyState >= 2){ // HAVE_CURRENT_DATA
     video.play();
   } else {
     video.addEventListener('canplay', () => video.play(), { once: true });
   }
 });
 
-// target 遺失時暫停影片
+// targetLost 時暫停影片
 targetEntity.addEventListener('targetLost', () => {
   video.pause();
   video.currentTime = 0;
@@ -68,18 +69,18 @@ targetEntity.addEventListener('targetLost', () => {
 </script>
 
 <style>
-  #backHomeBtn {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-  }
+#backHomeBtn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
 </style>
 
 <a href="https://sites.google.com/view/hanzilab">
-  <img id="backHomeBtn" src="/lobby/LOGO去背.png" style="width: 250px;height:auto">
+  <img id="backHomeBtn" src="/lobby/LOGO去背.png" style="width: 250px; height:auto">
 </a>
+
 </body>
 </html>
-
