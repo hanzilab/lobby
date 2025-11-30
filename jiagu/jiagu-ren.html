@@ -4,86 +4,70 @@
 <meta charset="utf-8" />
 <title>甲骨文-人</title>
 
-<!-- A-Frame & MindAR -->
 <script src="https://cdn.jsdelivr.net/npm/aframe@1.4.2/dist/aframe.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
 </head>
 <body>
 
 <a-scene
-  mindar-image="imageTargetSrc: /lobby/jiagu-ren.mind; autoStart: true; uiScanning: true;"
+  mindar-image="imageTargetSrc: ../jiagu-ren.mind; autoStart: true; uiScanning: true;"
   color-space="sRGB"
   renderer="colorManagement: true; physicallyCorrectLights: true"
   vr-mode-ui="enabled: false"
   device-orientation-permission-ui="enabled: false"
 >
-
   <a-assets>
-    <video id="introVid"
-      src="/jiagu-video/jiagu-ren.mp4"
-      preload="auto"
-      loop
-      muted
-      playsinline
-      webkit-playsinline
-      crossorigin="anonymous">
-    </video>
+    <video id="introVid" src="../jiagu-video/jiagu-ren.mp4" preload="auto" loop muted playsinline></video>
   </a-assets>
 
-  <a-light type="ambient" intensity="1.4"></a-light>
+  <a-light type="ambient" intensity="1.5"></a-light>
   <a-camera look-controls="enabled: false"></a-camera>
 
-  <!-- 不用 <a-video>！改用 plane（iOS 適用） -->
   <a-entity mindar-image-target="targetIndex: 0">
-    <a-plane id="videoPlane"
+    <a-video
+      id="videoEntity"
+      src="#introVid"
       width="1.2"
       height="0.7"
+      autoplay="false"
+      loop="true"
+      material="shader: flat"
       position="0 0 0"
-      rotation="0 0 0"
-      material="shader: flat; src: #introVid;">
-    </a-plane>
+    ></a-video>
   </a-entity>
-
 </a-scene>
-
 
 <script>
 const video = document.querySelector('#introVid');
+const videoPlane = document.querySelector('#videoEntity');
 const targetEntity = document.querySelector('a-entity[mindar-image-target]');
 
-// iOS 必須手動允許影片播放
-const enablePlay = () => {
-  video.play().catch(()=>{});
-};
-document.body.addEventListener('touchstart', enablePlay, { once: true });
-document.body.addEventListener('click', enablePlay, { once: true });
-
-// 目標偵測到 → 播放
-targetEntity.addEventListener('targetFound', () => {
-  video.play().catch(()=>{});
+videoPlane.addEventListener('click', () => {
+  video.paused ? video.play() : video.pause();
 });
 
-// 目標消失 → 暫停 & 重置
+targetEntity.addEventListener('targetFound', () => {
+  video.play();
+});
+
 targetEntity.addEventListener('targetLost', () => {
   video.pause();
   video.currentTime = 0;
 });
 </script>
 
-
-<!-- 返回按鈕 -->
 <style>
 #backHomeBtn {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+  text-align: center;
 }
 </style>
 
 <a href="https://sites.google.com/view/hanzilab">
-  <img id="backHomeBtn" src="/lobby/LOGO去背.png" style="width: 250px; height:auto;">
+  <img id="backHomeBtn" src="../lobby/LOGO去背.png" style="width: 250px;height:auto">
 </a>
 
 </body>
