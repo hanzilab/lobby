@@ -10,12 +10,11 @@
 <body>
 <!-- A-Frame 場景設定 -->
 <a-scene
-mindar-image="imageTargetSrc: jiagu-nu.mind; autoStart: true; uiScanning: true;"
+mindar-image="imageTargetSrc: /lobby/jiagu-ren.mind; autoStart: true; uiScanning: true;"
 color-space="sRGB"
 renderer="colorManagement: true; physicallyCorrectLights: true"
 vr-mode-ui="enabled: false"
-device-orientation-permission-ui="enabled: false"
->
+device-orientation-permission-ui="enabled: false">
 <!-- 載入影片資源（要與 HTML 放在同一目錄） -->
 <a-assets>
 <video id="introVid" src="/jiagu-video/jiagu-ren.mp4" preload="auto" loop muted></video>
@@ -76,8 +75,9 @@ video.currentTime = 0;
   }
 </style>
 
-<a href="https://sites.google.com/view/hanzilab"target="_top">
+<a href="https://sites.google.com/view/hanzilab" target="_top">
   <img id="backHomeBtn" src="/lobby/LOGO去背.png" style="width: 300px; height: auto;">
 </a>
 </body>
 </html>
+
