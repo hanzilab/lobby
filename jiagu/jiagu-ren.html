@@ -18,50 +18,56 @@
   vr-mode-ui="enabled: false"
   device-orientation-permission-ui="enabled: false">
 
-  <!-- 載入影片資源 -->
-  <a-assets>
-    <video id="introVid" src="/jiagu-video/jiagu-ren.mp4" preload="auto" loop muted></video>
-  </a-assets>
+<!-- 載入影片資源 -->
+<a-assets>
+  <!-- muted 確保手機自動播放允許 -->
+  <video id="introVid" src="/jiagu-video/jiagu-ren.mp4" preload="auto" loop muted playsinline></video>
+</a-assets>
 
-  <!-- 環境光 -->
-  <a-light type="ambient" intensity="1.5"></a-light>
-
-  <!-- 相機 -->
-  <a-camera look-controls="enabled: false"></a-camera>
-
-  <!-- 掃描後影片 -->
-  <a-entity mindar-image-target="targetIndex: 0">
-    <a-video
-      id="videoEntity"
-      src="#introVid"
-      width="1.2" height="0.7"
-      autoplay="false"
-      loop="true"
-      material="shader: flat"
-      position="0 0 0">
-    </a-video>
-  </a-entity>
-
-</a-scene>  <!-- ✅ 正確關閉 -->
+<!-- 掃描後影片 -->
+<a-entity mindar-image-target="targetIndex: 0">
+  <a-video
+    id="videoEntity"
+    src="#introVid"
+    width="1.2"
+    height="0.7"
+    autoplay="false"
+    loop="true"
+    material="shader: flat"
+    position="0 0 0.01"> <!-- 避免黑屏被 camera clipping 擋住 -->
+  </a-video>
+</a-entity>
 
 <!-- 互動邏輯 -->
 <script>
-const video = document.querySelector('#introVid');
-const videoPlane = document.querySelector('#videoEntity');
-const targetEntity = document.querySelector('a-entity[mindar-image-target]');
+window.addEventListener('DOMContentLoaded', () => {
+  const video = document.querySelector('#introVid');
+  const videoPlane = document.querySelector('#videoEntity');
+  const targetEntity = document.querySelector('a-entity[mindar-image-target]');
 
-videoPlane.addEventListener('click', () => {
-  if (video.paused) video.play();
-  else video.pause();
-});
+  // 點擊影片暫停/播放
+  videoPlane.addEventListener('click', () => {
+    if (video.paused) video.play();
+    else video.pause();
+  });
 
-targetEntity.addEventListener('targetFound', () => video.play());
+  // 掃描到 marker 時播放影片
+  targetEntity.addEventListener('targetFound', () => {
+    if (video.readyState >= 3) { // 確保影片可以播放
+      video.play();
+    } else {
+      video.oncanplay = () => video.play();
+    }
+  });
 
-targetEntity.addEventListener('targetLost', () => {
-  video.pause();
-  video.currentTime = 0;
+  // 掃描不到 marker 時暫停並重置
+  targetEntity.addEventListener('targetLost', () => {
+    video.pause();
+    video.currentTime = 0;
+  });
 });
 </script>
+
 
 <!-- 返回首頁按鈕 -->
 <style>
@@ -80,6 +86,7 @@ targetEntity.addEventListener('targetLost', () => {
 
 </body>
 </html>
+
 
 
 
