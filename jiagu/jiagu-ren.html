@@ -17,7 +17,7 @@ vr-mode-ui="enabled: false"
 device-orientation-permission-ui="enabled: false">
 <!-- 載入影片資源（要與 HTML 放在同一目錄） -->
 <a-assets>
-<video id="introVid" src="/jiagu-video/jiagu-ren.mp4" preload="auto" loop muted></video>
+<video id="introVid" src="/jiagu-video/jiagu-ren.mp4" preload="auto" loop muted playsinline></video>
 </a-assets>
 <!-- 環境光線，避免影片太暗 -->
 <a-light type="ambient" intensity="1.5"></a-light>
@@ -32,7 +32,7 @@ width="1.2" height="0.7"
 autoplay="false"
 loop="true"
 material="shader: flat"
-position="0 0 0">
+position="0 0 0.01">
 </a-video>
 </a-entity>
 </a-scene>
@@ -80,4 +80,5 @@ video.currentTime = 0;
 </a>
 </body>
 </html>
+
 
