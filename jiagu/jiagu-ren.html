@@ -27,7 +27,7 @@
       src="#introVid"
       width="1.2"
       height="0.7"
-      material="shader: flat"
+      material="shader: flat"; src: #introVid;"
       position="0 0 0"
       loop
       muted
@@ -42,31 +42,21 @@ const video = document.querySelector('#introVid');
 const videoPlane = document.querySelector('#videoEntity');
 const targetEntity = document.querySelector('a-entity[mindar-image-target]');
 
-// 先確保影片可以播放
-video.load();
-
-// 點擊影片切換播放 / 暫停
-videoPlane.addEventListener('click', () => {
-  if (video.paused) {
-    video.play();
-  } else {
-    video.pause();
-  }
-});
+// 強制影片在使用者互動後可以播放
+const enableVideoPlay = () => {
+  video.play().catch(err => {
+    console.log('需要使用者互動才能播放影片', err);
+  });
+};
+document.body.addEventListener('click', enableVideoPlay, { once: true });
+document.body.addEventListener('touchstart', enableVideoPlay, { once: true });
 
 // target 找到時播放影片
 targetEntity.addEventListener('targetFound', () => {
-  // 先確保影片加載完成
-  if (video.readyState >= 2) { // HAVE_CURRENT_DATA
-    video.play().catch(err => {
-      console.log('影片播放失敗，可能是瀏覽器自動播放限制', err);
-    });
+  if (video.readyState >= 2) {
+    video.play();
   } else {
-    video.addEventListener('canplay', () => {
-      video.play().catch(err => {
-        console.log('影片播放失敗', err);
-      });
-    }, { once: true });
+    video.addEventListener('canplay', () => video.play(), { once: true });
   }
 });
 
@@ -92,3 +82,4 @@ targetEntity.addEventListener('targetLost', () => {
 </a>
 </body>
 </html>
+
