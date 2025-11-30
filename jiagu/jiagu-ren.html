@@ -12,7 +12,7 @@
 <body>
 <!-- A-Frame 場景設定 -->
 <a-scene
-  mindar-image="imageTargetSrc: /lobby/jiagu-ren.mind; autoStart: true; uiScanning: true;"
+  mindar-image="imageTargetSrc: jiagu-ren.mind; autoStart: true; uiScanning: true;"
   color-space="sRGB"
   renderer="colorManagement: true; physicallyCorrectLights: true"
   vr-mode-ui="enabled: false"
@@ -20,7 +20,7 @@
 
   <!-- 載入影片資源 -->
   <a-assets>
-    <video id="introVid" src="jiagu-ren.mp4" preload="auto" loop muted></video>
+    <video id="introVid" src="/jiagu/jiagu-ren.mp4" preload="auto" loop muted></video>
   </a-assets>
 
   <!-- 環境光 -->
@@ -80,3 +80,4 @@ targetEntity.addEventListener('targetLost', () => {
 
 </body>
 </html>
+
